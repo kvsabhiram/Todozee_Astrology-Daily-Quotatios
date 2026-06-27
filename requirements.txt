@@ -1,0 +1,40 @@
+# =========================================================
+# Astrology Daily Quotes — Python dependencies
+# Pinned to versions verified working with the local GPU stack
+# (torch 2.11 + CUDA 12.8, transformers 5.9, Gemma 4 E2B-IT).
+# =========================================================
+
+# ---- Astrology calculations ----
+pyswisseph==2.10.3.2
+
+# ---- Geocoding & timezone ----
+geopy==2.4.1
+timezonefinder==8.2.4
+pytz==2026.2
+
+# ---- FastAPI server ----
+fastapi==0.136.3
+uvicorn[standard]==0.48.0
+pydantic==2.13.4
+
+# ---- Local LLM inference (Gemma 4 E2B-IT on local GPU) ----
+# IMPORTANT: install torch + torchvision FIRST from the cu128 wheel index
+# so the binaries match your CUDA driver. The cu128 build supports
+# Blackwell GPUs (RTX 5090, sm_120):
+#
+#   pip install torch==2.11.0+cu128 torchvision==0.26.0+cu128 \
+#       --index-url https://download.pytorch.org/whl/cu128
+#
+# Then run:  pip install -r requirements.txt
+torch==2.11.0+cu128
+torchvision==0.26.0+cu128            # required by the multimodal Gemma 4 processor (video backend)
+transformers==5.9.0
+accelerate==1.13.0
+sentencepiece==0.2.1
+pillow==12.2.0                       # required by the multimodal Gemma 4 processor (image backend)
+
+# ---- Hugging Face CLI ----
+huggingface_hub==1.16.1
+
+# ---- Date utilities ----
+python-dateutil==2.9.0.post0
