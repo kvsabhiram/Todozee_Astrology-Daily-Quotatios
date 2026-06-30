@@ -1,0 +1,14 @@
+.git
+.gitignore
+terraform/
+deploy/
+.github/
+**/__pycache__/
+*.pyc
+logs/
+astro_daily/
+venv/
+.venv/
+hf_cache/
+.cache/
+README.md
