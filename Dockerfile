@@ -9,12 +9,16 @@ ENV DEBIAN_FRONTEND=noninteractive \
     HF_HOME=/app/hf_cache \
     HF_HUB_DISABLE_TELEMETRY=1
 
-# Python 3.10 + build tools (gcc for any triton/torch JIT) + git/curl for healthcheck.
+# Python 3.11 (timezonefinder 8.x requires >=3.11) + build tools (gcc for any
+# triton/torch JIT) + git/curl for healthcheck. 3.11 via the deadsnakes PPA.
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        python3.10 python3-pip python3.10-dev \
-        git curl ca-certificates \
-        gcc build-essential \
-    && ln -sf /usr/bin/python3.10 /usr/bin/python \
+        software-properties-common curl ca-certificates gnupg \
+    && add-apt-repository -y ppa:deadsnakes/ppa \
+    && apt-get update && apt-get install -y --no-install-recommends \
+        python3.11 python3.11-dev python3.11-venv \
+        git gcc build-essential \
+    && curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11 \
+    && ln -sf /usr/bin/python3.11 /usr/bin/python \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
